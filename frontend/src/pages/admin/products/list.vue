@@ -63,11 +63,14 @@ export default {
   },
   methods: {
     get() {
+      axios.defaults.withCredentials = true;
       axios
-        .get("http://127.0.0.1:8000/sanctum/csrf-cookie")
+        .get("http://127.0.0.1:8002/sanctum/csrf-cookie")
         .then((response) => {
-          axios
-            .get("http://127.0.0.1:8000/api/products", { 
+          
+        });
+        axios
+            .get("http://127.0.0.1:8002/api/products", { 
               headers: {
                 Authorization: "Bearer" + VueCookies.get("admin_access_token"),
               },
@@ -76,7 +79,6 @@ export default {
               console.log(response.data);
               this.api.items = response.data.items;
             });
-        });
     },
   },
 };
