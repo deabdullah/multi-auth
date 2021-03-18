@@ -15,9 +15,9 @@ class ProductController extends Controller
      */
     public function index()
     {   
-        $products = Product::all(); //getting all products
+        $items = Product::all(); //getting all products
 
-        return compact('products');
+        return compact('items');
         //
     }
 

@@ -1,6 +1,6 @@
 <template>
-  <div class="q-pa-md">
-    <q-layout view="hHh Lpr lff" container style="height: 300px" class="shadow-2 rounded-borders">
+  <div class="">
+    <q-layout view="hHh Lpr lff" container style="height: 600px" class="shadow-2 ">
       <q-header elevated class="bg-black">
         <q-toolbar>
           <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
@@ -20,7 +20,7 @@
           <q-list>
 
             <template v-for="(menuItem, index) in menuList">
-              <q-item :key="index" clickable :active="menuItem.label === 'Outbox'" v-ripple>
+              <q-item :key="index" clickable :active="menuItem.label === 'Outbox'" :to='{name: menuItem.link}'  v-ripple>
                 <q-item-section avatar>
                   <q-icon :name="menuItem.icon" />
                 </q-item-section>
@@ -44,41 +44,18 @@
 <script>
 const menuList = [
   {
-    icon: 'inbox',
-    label: 'Inbox',
-    separator: true
-  },
-  {
-    icon: 'send',
-    label: 'Outbox',
-    separator: false
-  },
-  {
-    icon: 'delete',
-    label: 'Trash',
-    separator: false
-  },
-  {
-    icon: 'error',
-    label: 'Spam',
+    icon: 'verified',
+    label: 'Products',
+    link: 'products.list',
     separator: true
   },
   {
     icon: 'settings',
-    label: 'Settings',
+    label: 'Profile',
+     link: 'products.show',
     separator: false
   },
-  {
-    icon: 'feedback',
-    label: 'Send Feedback',
-    separator: false
-  },
-  {
-    icon: 'help',
-    iconColor: 'primary',
-    label: 'Help',
-    separator: false
-  }
+  
 ]
 
 export default {
@@ -90,3 +67,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.navs{
+  text-decoration: none;
+  color: black;
+}
+</style>
