@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
+
 class LoginController extends Controller
 {
    
@@ -16,29 +17,42 @@ class LoginController extends Controller
         ([
         'email' => 'required',
         'password' => 'required',
-        ]);
+        ]); //validation
 
-        if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) 
+        if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) //attempting login
         {
+         
+         $admin = Auth::guard('admin')->user();   
+         $token = $admin->createToken('multi-auth')->plainTextToken; //creating token
 
-         return response()->json(['message' => 'You are logged in as Admin']);
+         return response()->json(['message' => 'You are logged in as Admin', 'token' => $token]);
+      
         }
+     
         return response()->json(['message' => 'You credentials are not correct']);
+  
     }
 
     public function userLogin(Request $request)
     {
-        $this->validate($request, [
-            'email'   => 'required|email',
-            'password' => 'required|min:6'
-        ]);
+        $validated = $request->validate
+        ([
+        'email' => 'required',
+        'password' => 'required',
+        ]); //validation
 
-        if (Auth::guard('user')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) 
+        if (Auth::guard('user')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) //attempting login
         {
 
-         return response()->json(['message' => 'You are logged in as User']);
+         $user = Auth::guard('user')->user();   
+         $token = $user->createToken('multi-auth')->plainTextToken; //creating token
+
+         return response()->json(['message' => 'You are logged in as User', 'token' => $token]);
+       
         }
+
         return response()->json(['message' => 'You credentials are not correct']);
+  
     }
 
    
