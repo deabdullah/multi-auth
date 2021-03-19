@@ -27,7 +27,8 @@ const routes = [
         children: [
           { path: '', name: 'products.list', component: () => import('pages/admin/products/list.vue') },
           { path: 'show', name: 'products.show', component: () => import('pages/admin/products/show.vue') },
-          { path: 'edit', name: 'products.edit', component: () => import('pages/admin/products/edit.vue') }
+          { path: 'create', name: 'products.create', component: () => import('pages/admin/products/create.vue') },
+          { path: 'edit/:product', name: 'products.edit', component: () => import('pages/admin/products/edit.vue') }
         ]
       }
     ]

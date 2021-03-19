@@ -15,7 +15,7 @@ return [
 
     'stateful' => explode(',', env(
         '*',
-        // 'localhost,localhost:3000,127.0.0.1,127.0.0.1:8000,::1,127.0.0.1:8001, localhost:8080'
+        'localhost,localhost:3000,127.0.0.1,127.0.0.1:8000,::1,127.0.0.1:8001, http://localhost:8080, http://localhost:8080/admin, http://localhost:8080/#/admin, http://localhost:8080/#/admin/login'
     )),
 
     /*

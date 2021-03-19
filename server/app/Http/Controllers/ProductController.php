@@ -46,6 +46,8 @@ class ProductController extends Controller
         ([
         'name' => 'required',
         'detail' => 'required',
+        'price' => 'required',
+
         ]); //validation
 
         $product = Product::create($input); //creating product
@@ -73,8 +75,9 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Product $product)
     {
+        return compact('product');
         //
     }
 
@@ -85,8 +88,15 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
+        $request->validate([
+            'name' => 'required',
+            'detail' => 'required',
+            'price' => 'required'
+        ]);
+
+        $product->update($request->all());
         //
     }
 

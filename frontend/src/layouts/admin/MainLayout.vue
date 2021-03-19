@@ -4,7 +4,7 @@
       <q-header elevated class="bg-black">
         <q-toolbar>
           <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
-          <q-toolbar-title>Header</q-toolbar-title>
+          <q-toolbar-title>Admin Dashboard</q-toolbar-title>
         </q-toolbar>
       </q-header>
 

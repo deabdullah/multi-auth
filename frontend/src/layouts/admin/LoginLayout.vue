@@ -28,7 +28,6 @@
 </template>
 <script>
 import { Form } from "vform";
-import axios from 'axios'
 import VueCookies from "vue-cookies";
 
 export default {
@@ -45,19 +44,18 @@ export default {
 
   methods: {
     onSubmit() {
-      axios.defaults.withCredentials = true;
-      axios
-        .get("http://127.0.0.1:8002/sanctum/csrf-cookie")
+      this.$axios
+        .get("http://127.0.0.1:8001/sanctum/csrf-cookie")
         .then((response) => {
-          
+        VueCookies.set('X-XSRF-TOKEN',VueCookies.get("csrf-cookie") )  ;
         });
-        this.form
-            .post("http://127.0.0.1:8002/api/admin/login")
-            .then((response) => {
-              // console.log(response);
-              VueCookies.set("admin_access_token", response.data.token, "1h");
-              this.$router.push({ name: "admin.home" });
-            });
+      this.form
+        .post("http://127.0.0.1:8001/api/admin/login")
+        .then((response) => {
+          // console.log(response);
+          VueCookies.set("admin_access_token", response.data.token, "1h");
+          this.$router.push({ name: "admin.home" });
+        });
     },
   },
 };

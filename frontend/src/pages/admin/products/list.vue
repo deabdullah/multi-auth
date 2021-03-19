@@ -9,8 +9,16 @@
       :filter="filter"
       hide-header
       v-if="api.items"
+      selection="multiple"
     >
       <template v-slot:top-right>
+        <q-btn
+          class="q-ma-sm"
+          color="light-green"
+          text-color="black"
+          label="Create Product"
+          :to="{ name: 'products.create' }"
+        />
         <q-input
           borderless
           dense
@@ -21,13 +29,28 @@
           <template v-slot:append>
             <q-icon name="search" />
           </template>
+          
         </q-input>
+      </template>
+      <template v-slot:body-selection="scope">
+        <q-btn
+          class="q-ma-sm"
+          color="white"
+          text-color="black"
+          @click="edit(scope.row.id)"
+          label="Edit"
+        />
+        <q-btn
+          color="red"
+          text-color="black"
+          @click="remove(scope.row.id)"
+          label="Delete"
+        />
       </template>
     </q-table>
   </div>
 </template>
 <script>
-import axios from "axios";
 import VueCookies from "vue-cookies";
 export default {
   name: "Products",
@@ -59,26 +82,34 @@ export default {
       api: {
         items: null,
       },
+      config: {
+        headers: {
+          Authorization: "Bearer " + VueCookies.get("admin_access_token"),
+        },
+      },
     };
   },
   methods: {
     get() {
-      axios.defaults.withCredentials = true;
-      axios
-        .get("http://127.0.0.1:8002/sanctum/csrf-cookie")
+      this.$axios;
+      this.$axios
+        .get("http://127.0.0.1:8001/api/products", this.config)
         .then((response) => {
-          
+          console.log(response.data);
+          this.api.items = response.data.items;
         });
-        axios
-            .get("http://127.0.0.1:8002/api/products", { 
-              headers: {
-                Authorization: "Bearer" + VueCookies.get("admin_access_token"),
-              },
-            })
-            .then((response) => {
-              console.log(response.data);
-              this.api.items = response.data.items;
-            });
+    },
+    edit(id) {
+      console.log("editing product...");
+      this.$router.push({ name: "products.edit", params: {product: id} });
+    },
+    remove(id) {
+      this.$axios
+        .delete("http://127.0.0.1:8001/api/products/" + id, this.config)
+        .then((response) => {
+          this.get();
+          alert("Product Deleted");
+        });
     },
   },
 };
