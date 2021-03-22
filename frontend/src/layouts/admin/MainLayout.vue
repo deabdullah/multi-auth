@@ -50,9 +50,9 @@ const menuList = [
     separator: true
   },
   {
-    icon: 'settings',
-    label: 'Profile',
-     link: 'products.show',
+    icon: 'person',
+    label: 'Users',
+     link: 'users.list',
     separator: false
   },
   

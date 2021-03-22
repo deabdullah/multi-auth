@@ -93,9 +93,8 @@ export default {
     get() {
       this.$axios;
       this.$axios
-        .get("http://127.0.0.1:8001/api/products", this.config)
+        .get("http://ma-server.test/api/products", this.config)
         .then((response) => {
-          console.log(response.data);
           this.api.items = response.data.items;
         });
     },
@@ -105,7 +104,7 @@ export default {
     },
     remove(id) {
       this.$axios
-        .delete("http://127.0.0.1:8001/api/products/" + id, this.config)
+        .delete("http://ma-server.test/api/products/" + id, this.config)
         .then((response) => {
           this.get();
           alert("Product Deleted");

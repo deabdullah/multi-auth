@@ -1,9 +1,10 @@
-import VueCookies from 'vue-cookies'
+// import VueCookies from 'vue-cookies'
 
 const routes = [
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
+
     children: [
       { path: '', component: () => import('pages/Index.vue') }
     ]
@@ -15,13 +16,15 @@ const routes = [
   },
   {
     path: '/admin',
+
     component: () => import('layouts/admin/MainLayout.vue'),
-    beforeEnter: (to, from, next) => {
-      if (VueCookies.get('admin_access_token')) next()
-      else next({ name: 'admin.login' })
-    },
+    
+    // beforeEnter: (to, from, next) => {
+    //   if (VueCookies.get('admin_access_token')) next()
+    //   else next({ name: 'admin.login' })
+    // },
     children: [
-      { path: '',name: 'admin.home', component: () => import('pages/admin/Index.vue') },
+      { path: '', name: 'admin.home', component: () => import('pages/admin/Index.vue') },
       {
         path: 'products', component: () => import('pages/admin/products/index.vue'),
         children: [
@@ -29,6 +32,15 @@ const routes = [
           { path: 'show', name: 'products.show', component: () => import('pages/admin/products/show.vue') },
           { path: 'create', name: 'products.create', component: () => import('pages/admin/products/create.vue') },
           { path: 'edit/:product', name: 'products.edit', component: () => import('pages/admin/products/edit.vue') }
+        ]
+      },
+      {
+        path: 'users', component: () => import('pages/admin/users/index.vue'),
+        children: [
+          { path: '', name: 'users.list', component: () => import('pages/admin/users/list.vue') },
+          { path: 'show', name: 'users.show', component: () => import('pages/admin/users/show.vue') },
+          { path: 'create', name: 'users.create', component: () => import('pages/admin/users/create.vue') },
+          { path: 'edit/:user', name: 'users.edit', component: () => import('pages/admin/users/edit.vue') }
         ]
       }
     ]
@@ -40,5 +52,6 @@ const routes = [
     component: () => import('pages/Error404.vue')
   }
 ]
+
 
 export default routes

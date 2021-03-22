@@ -45,12 +45,12 @@ export default {
   methods: {
     onSubmit() {
       this.$axios
-        .get("http://127.0.0.1:8001/sanctum/csrf-cookie")
+        .get("http://ma-server.test/sanctum/csrf-cookie")
         .then((response) => {
         VueCookies.set('X-XSRF-TOKEN',VueCookies.get("csrf-cookie") )  ;
         });
       this.form
-        .post("http://127.0.0.1:8001/api/admin/login")
+        .post("http://ma-server.test/api/admin/login")
         .then((response) => {
           // console.log(response);
           VueCookies.set("admin_access_token", response.data.token, "1h");

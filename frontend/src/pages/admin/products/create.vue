@@ -27,7 +27,7 @@ export default {
     create() {
       this.form
         .post(
-          "http://127.0.0.1:8001/api/products",
+          "http://ma-server.test/api/products",
           this.config
         )
         .then((response) => {

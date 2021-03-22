@@ -28,7 +28,7 @@ export default {
     edit() {
       this.$axios
         .get(
-          "http://127.0.0.1:8001/api/products/" +
+          "http://ma-server.test/api/products/" +
             this.$route.params.product +
             "/edit",
           this.config
@@ -48,7 +48,7 @@ export default {
     update() {
       this.form
         .patch(
-          "http://127.0.0.1:8001/api/products/" + this.$route.params.product,
+          "http://ma-server.test/api/products/" + this.$route.params.product,
           this.config
         )
         .then((response) => {
