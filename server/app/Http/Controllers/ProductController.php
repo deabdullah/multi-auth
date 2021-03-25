@@ -77,7 +77,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return compact('product');
+        $item = $product;
+        return compact('item');
         //
     }
 

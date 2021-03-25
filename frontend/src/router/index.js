@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import routes from './routes'
-import { authAdmin, logAdmin } from 'src/middleware/auth'
 import middleware from 'src/middleware/middlewares'
 
 Vue.use(VueRouter)

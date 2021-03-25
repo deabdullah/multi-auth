@@ -81,7 +81,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return compact('user');
+        $item = $user;
+        return compact('item');
         //
     }
 
@@ -96,9 +97,12 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'emaill' => 'required'
+            'email' => 'required',
         ]);
+        if($request['password'] == ''){
+            $request['password'] = '12345678';
 
+        }
         $user->update($request->all());
         //
     }

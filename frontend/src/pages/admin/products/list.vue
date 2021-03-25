@@ -29,7 +29,6 @@
           <template v-slot:append>
             <q-icon name="search" />
           </template>
-          
         </q-input>
       </template>
       <template v-slot:body-selection="scope">
@@ -52,11 +51,13 @@
 </template>
 <script>
 import VueCookies from "vue-cookies";
+import listMixin from "src/mixins/routeMixin";
 export default {
   name: "Products",
   mounted() {
     this.get();
   },
+  mixins: [listMixin],
   data() {
     return {
       filter: "",
@@ -82,6 +83,11 @@ export default {
       api: {
         items: null,
       },
+      endpoints: {
+        index: "api/products",
+        del: "api/products/",
+      },
+
       config: {
         headers: {
           Authorization: "Bearer " + VueCookies.get("admin_access_token"),
@@ -90,25 +96,9 @@ export default {
     };
   },
   methods: {
-    get() {
-      this.$axios;
-      this.$axios
-        .get("http://ma-server.test/api/products", this.config)
-        .then((response) => {
-          this.api.items = response.data.items;
-        });
-    },
     edit(id) {
       console.log("editing product...");
-      this.$router.push({ name: "products.edit", params: {product: id} });
-    },
-    remove(id) {
-      this.$axios
-        .delete("http://ma-server.test/api/products/" + id, this.config)
-        .then((response) => {
-          this.get();
-          alert("Product Deleted");
-        });
+      this.$router.push({ name: "products.edit", params: { product: id } });
     },
   },
 };

@@ -2,12 +2,19 @@
   <div class="q-ma-xl">
     <h4 class="q-ml-md">Create Product</h4>
     <EditForm v-model="form" />
-    <q-btn label="Create Product" class="q-ml-md" @click="create" color="green" />
+    <q-btn
+      label="Create Product"
+      class="q-ml-md"
+      @click="create"
+      color="green"
+    />
   </div>
 </template>
 <script>
 import VueCookies from "vue-cookies";
 import EditForm from "./_Form";
+import routeMixin from "src/mixins/routeMixin";
+
 export default {
   name: "Create",
   data() {
@@ -17,23 +24,16 @@ export default {
           Authorization: "Bearer " + VueCookies.get("admin_access_token"),
         },
       },
-      form: null
+      form: null,
+      endpoints: {
+        create: "api/products",
+      },
     };
   },
+  mixins: [routeMixin],
+
   components: { EditForm },
- 
-  methods: {
- 
-    create() {
-      this.form
-        .post(
-          "http://ma-server.test/api/products",
-          this.config
-        )
-        .then((response) => {
-          this.$router.push({ name: "products.list" });
-        });
-    },
-  },
+
+  methods: {},
 };
 </script>

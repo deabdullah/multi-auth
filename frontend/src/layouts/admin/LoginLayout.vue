@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-md fixed-center" style="max-width: 450px">
     <h3>Login Form</h3>
-    <q-form @submit.prevent="onSubmit" class="q-gutter-md">
+    <q-form @submit.prevent="onLogin" class="q-gutter-md">
       <q-input
         filled
         v-model="form.email"
@@ -29,6 +29,7 @@
 <script>
 import { Form } from "vform";
 import VueCookies from "vue-cookies";
+import routeMixin from "src/mixins/routeMixin";
 
 export default {
   name: "Login",
@@ -39,24 +40,14 @@ export default {
         email: "",
         password: "",
       }),
+      endpoints: {
+        login: "api/admin/login",
+        token: "sanctum/csrf-cookie"
+      },
     };
   },
+  mixins: [routeMixin],
 
-  methods: {
-    onSubmit() {
-      this.$axios
-        .get("http://ma-server.test/sanctum/csrf-cookie")
-        .then((response) => {
-        VueCookies.set('X-XSRF-TOKEN',VueCookies.get("csrf-cookie") )  ;
-        });
-      this.form
-        .post("http://ma-server.test/api/admin/login")
-        .then((response) => {
-          // console.log(response);
-          VueCookies.set("admin_access_token", response.data.token, "1h");
-          this.$router.push({ name: "admin.home" });
-        });
-    },
-  },
+  methods: {},
 };
 </script>

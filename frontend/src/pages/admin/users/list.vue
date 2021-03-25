@@ -52,8 +52,12 @@
 </template>
 <script>
 import VueCookies from "vue-cookies";
+import listMixin from 'src/mixins/routeMixin'
+
 export default {
   name: "Users",
+  mixins: [listMixin],
+
   mounted() {
     this.get();
   },
@@ -82,6 +86,10 @@ export default {
       api: {
         items: null,
       },
+      endpoints: {
+        index: 'api/users',
+        del: 'api/users/'
+      },
       config: {
         headers: {
           Authorization: "Bearer " + VueCookies.get("admin_access_token"),
@@ -90,26 +98,12 @@ export default {
     };
   },
   methods: {
-    get() {
-      this.$axios;
-      this.$axios
-        .get("http://ma-server.test/api/users", this.config)
-        .then((response) => {
-          this.api.items = response.data.items;
-        });
-    },
+    
     edit(id) {
       console.log("editing user...");
       this.$router.push({ name: "users.edit", params: {user: id} });
     },
-    remove(id) {
-      this.$axios
-        .delete("http://ma-server.test/api/users/" + id, this.config)
-        .then((response) => {
-          this.get();
-          alert("User Deleted");
-        });
-    },
+    
   },
 };
 </script>

@@ -8,6 +8,8 @@
 <script>
 import VueCookies from "vue-cookies";
 import EditForm from "./_Form";
+import routeMixin from "src/mixins/routeMixin";
+
 export default {
   name: "Edit",
   data() {
@@ -17,44 +19,19 @@ export default {
           Authorization: "Bearer " + VueCookies.get("admin_access_token"),
         },
       },
-      form: null
+      form: null,
+      endpoints: {
+        edit: "api/products/" + this.$route.params.product + "/edit",
+        update: "api/products/" + this.$route.params.product,
+      },
     };
   },
+  mixins: [routeMixin],
+
   components: { EditForm },
   mounted() {
     this.edit();
   },
-  methods: {
-    edit() {
-      this.$axios
-        .get(
-          "http://ma-server.test/api/products/" +
-            this.$route.params.product +
-            "/edit",
-          this.config
-        )
-        .then((response) => {
-        //   Object.keys(this.form).forEach((key) => {
-        //     console.log(this.form[key]);
-        //     this.form[key] = response.data.product[key];
-        //   });
-          Object.keys(response.data.product).forEach((key) => {
-
-          this.form[key] = response.data.product[key];
-
-          });
-        });
-    },
-    update() {
-      this.form
-        .patch(
-          "http://ma-server.test/api/products/" + this.$route.params.product,
-          this.config
-        )
-        .then((response) => {
-          this.$router.push({ name: "products.list" });
-        });
-    },
-  },
+  methods: {},
 };
 </script>

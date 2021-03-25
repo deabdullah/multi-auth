@@ -24,5 +24,4 @@ const logAdmin = () => {
 };
 
 export { logAdmin, authAdmin };
-// export  default authAdmin;
 

@@ -8,6 +8,8 @@
 <script>
 import VueCookies from "vue-cookies";
 import EditForm from "./_Form";
+import routeMixin from "src/mixins/routeMixin";
+
 export default {
   name: "Create",
   data() {
@@ -17,23 +19,18 @@ export default {
           Authorization: "Bearer " + VueCookies.get("admin_access_token"),
         },
       },
-      form: null
+      form: null,
+       endpoints: {
+        create: "api/users",
+      },
     };
   },
+  mixins: [routeMixin],
+
   components: { EditForm },
- 
+
   methods: {
- 
-    create() {
-      this.form
-        .post(
-          "http://ma-server.test/api/users",
-          this.config
-        )
-        .then((response) => {
-          this.$router.push({ name: "users.list" });
-        });
-    },
+  
   },
 };
 </script>
