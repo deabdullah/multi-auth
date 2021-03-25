@@ -1,13 +1,28 @@
 import VueCookies from 'vue-cookies'
-const isLoggedIn = () => !!VueCookies.get('admin_access_token')
 
-const authMiddleware = async ({ to, from,  next }) => {
-    console.log('authMiddleware')
-    if (!isLoggedIn()) {
-        next({
-            name: "admin.login",
-        });
+const authAdmin = () => {
+    if (!VueCookies.get('admin_access_token')) {
+        console.log('User is not authenticated from middleware')
+        return false;
     }
-}
+    else {
+        console.log('authadmin')
+        return true;
+    }
 
-export default authMiddleware;
+};
+
+const logAdmin = () => {
+    if (!VueCookies.get('admin_access_token')) {
+        console.log('Admin is not logged in from middleware')
+        return false;
+    }
+    else {
+        console.log('logadmin')
+        return true;
+    }
+};
+
+export { logAdmin, authAdmin };
+// export  default authAdmin;
+

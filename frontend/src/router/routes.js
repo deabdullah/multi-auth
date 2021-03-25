@@ -18,11 +18,9 @@ const routes = [
     path: '/admin',
 
     component: () => import('layouts/admin/MainLayout.vue'),
-    
-    // beforeEnter: (to, from, next) => {
-    //   if (VueCookies.get('admin_access_token')) next()
-    //   else next({ name: 'admin.login' })
-    // },
+    meta: {
+      auth: true
+    },
     children: [
       { path: '', name: 'admin.home', component: () => import('pages/admin/Index.vue') },
       {

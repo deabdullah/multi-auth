@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import routes from './routes'
-import MiddlewarePlugin from "vue-router-middleware-plugin"
+import { authAdmin, logAdmin } from 'src/middleware/auth'
+import middleware from 'src/middleware/middlewares'
 
 Vue.use(VueRouter)
 
@@ -28,7 +29,14 @@ export default function (/* { store, ssrContext } */) {
     base: process.env.VUE_ROUTER_BASE
   });
 
-  
+  Router.beforeEach((to, from, next) => {
+
+    if (to.matched[0].meta.auth) {
+      let authCheck = middleware()
+      if (!authCheck) next({ name: 'admin.login' })
+    }
+    next()
+  })
 
 
 
