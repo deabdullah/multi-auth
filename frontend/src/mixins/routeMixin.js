@@ -68,6 +68,7 @@ export default {
                 .then((response) => {
                     // console.log(response);
                     VueCookies.set("admin_access_token", response.data.token, "1h");
+                    this.$store.dispatch('auth/login', { admin: true, token: true, user: response.data.user })
                     this.$router.push({ name: "admin.home" });
                 });
         },

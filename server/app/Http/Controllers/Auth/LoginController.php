@@ -22,10 +22,10 @@ class LoginController extends Controller
         if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) //attempting login
         {
          
-         $admin = Auth::guard('admin')->user();   
-         $token = $admin->createToken('multi-auth')->plainTextToken; //creating token
+         $user = Auth::guard('admin')->user();   
+         $token = $user->createToken('multi-auth')->plainTextToken; //creating token
 
-         return response()->json(['message' => 'You are logged in as Admin', 'token' => $token]);
+         return compact('user', 'token');
       
         }
      
